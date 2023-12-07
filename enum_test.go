@@ -27,11 +27,12 @@ func TestMember_Value(t *testing.T) {
 
 func TestEnum_Parse(t *testing.T) {
 	is := is.New(t)
-	var parsed *Color
-	parsed = Colors.Parse("red")
-	is.Equal(parsed, &Red)
-	parsed = Colors.Parse("purple")
-	is.Equal(parsed, nil)
+	parsed, ok := Colors.Parse("red")
+	is.True(ok)
+	is.Equal(parsed, Red)
+	parsed, ok = Colors.Parse("purple")
+	is.True(!ok)
+	is.Equal(parsed, Color{})
 }
 
 func TestEnum_Empty(t *testing.T) {

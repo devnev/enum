@@ -29,16 +29,16 @@ type iMember[T comparable] interface {
 // Use [New] to construct a new Enum from a list of members.
 type Enum[M iMember[V], V comparable] struct {
 	members []M
-	v2m     map[V]*M
+	v2m     map[V]M
 }
 
 // New constructs a new [Enum] wrapping the given enum members.
 func New[V comparable, M iMember[V]](members ...M) Enum[M, V] {
 	e := Enum[M, V]{members, nil}
-	e.v2m = make(map[V]*M)
+	e.v2m = make(map[V]M)
 	for i, m := range e.members {
 		v := e.Value(m)
-		e.v2m[v] = &e.members[i]
+		e.v2m[v] = e.members[i]
 	}
 	return e
 }
@@ -71,8 +71,9 @@ func (e Enum[M, V]) Contains(member M) bool {
 // Parse converts a raw value into a member of the enum.
 //
 // If none of the enum members has the given value, nil is returned.
-func (e Enum[M, V]) Parse(value V) *M {
-	return e.v2m[value]
+func (e Enum[M, V]) Parse(value V) (M, bool) {
+	m, ok := e.v2m[value]
+	return m, ok
 }
 
 // Value returns the wrapped value of the given enum member.
