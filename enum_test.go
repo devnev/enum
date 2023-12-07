@@ -3,8 +3,8 @@ package enum_test
 import (
 	"testing"
 
+	"github.com/devnev/enum"
 	"github.com/matryer/is"
-	"github.com/orsinium-labs/enum"
 )
 
 type Color enum.Member[string]

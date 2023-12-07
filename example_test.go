@@ -3,7 +3,7 @@ package enum_test
 import (
 	"fmt"
 
-	"github.com/orsinium-labs/enum"
+	"github.com/devnev/enum"
 )
 
 func ExampleNew() {
